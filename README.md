@@ -79,3 +79,42 @@ USE database_name;
 SHOW tables;
 SHOW FIELDS FROM some_table_name;
 ```
+
+What you are looking for here is generally speaking: 
+
+**PROBLEM:** the main table is storing strings as `VARCHAR` or `CHAR`
+**SOLUTION:** store strings in separate lookup table and store binary index in main table instead
+
+**PROBLEM:** integer values are stored as `INT` or similar
+**SOLUTION:** store integer values as `BIT` instead
+
+**PROBLEM:** `VARCHAR` is used so database size can't be predicted 
+**SOLUTION:** store all string values outside of the main table
+
+**PROBLEM:** floating point values are stored as `FLOAT`
+**SOLUTION:** store as `BIT` instead by using "minor currency" approach
+
+There are many other things, but these are the most common issues. In summary: 
+
+- never store string values in the main tables
+- all numeric data is stored as `BIT`
+- for any values that repeat often (e.g. website url) keep it in a separate table
+- fix column sizes in the design phase, so database size (and performance) can be predicted
+
+Before making any changes, it's a great idea to run a proper benchmarking test. 
+
+#### run a baseline benchmarking test on mysql performance
+
+First install MySQL Tuner:
+
+```
+wget http://mysqltuner.pl/ -O mysqltuner.pl
+wget https://raw.githubusercontent.com/major/MySQLTuner-perl/master/basic_passwords.txt -O basic_passwords.txt
+wget https://raw.githubusercontent.com/major/MySQLTuner-perl/master/vulnerabilities.csv -O vulnerabilities.csv
+```
+
+Then run it:
+
+`perl mysqltuner.pl --host 127.0.0.1`
+
+Make sure to take note of the various statistics regarding your current performance, and then compare it after making changes. 
