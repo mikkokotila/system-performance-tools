@@ -1,7 +1,35 @@
-## system-performance-tools
+# system-performance-tools
 List of tools for investigating system performance
 
-## Investigating Failing Requests
+### Basic System Benchmarking
+
+#### get a topline view to the system
+
+`top`, `htop` or `atop` ... each of which are slightly different.
+
+#### perform a comprehensive system benchmarking test
+
+`perf bench`
+
+NOTE: there are many useful options in the `perf` package, so do make yourself familiar with it. You can, for example, see exactly how a given command is using system resources.
+
+### get a view of the memory
+
+See available memory with: 
+
+`watch free -m`
+
+Or get a deep dive with:
+
+`vmstat`
+
+#### get a view of system utilization rate
+
+`watch iostat`
+
+NOTE: This is particularly useful when you are running something simultanously.
+
+### Investigating Failing Requests
 
 #### see the TOP10 services based on number of open sockets 
 
@@ -36,3 +64,18 @@ NOTE: the process id and name will be on the last row of the output after a list
 Here we will find out exactly what are the files in our system that are associated with the waiting connections.
 
 Next, it's time to look at the associated programs (or parts of programs) carefully, and think why they might be causing the issues.
+
+
+### Investigating Database Issues
+
+#### get the current sizes of mysql databases
+
+`du -h /var/lib/mysql`
+
+#### get the data types for mysql table
+
+```
+USE database_name;
+SHOW tables;
+SHOW FIELDS FROM some_table_name;
+```
