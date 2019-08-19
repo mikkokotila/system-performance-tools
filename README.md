@@ -13,6 +13,8 @@ List of tools for investigating system performance
 
 NOTE: there are many useful options in the `perf` package, so do make yourself familiar with it. You can, for example, see exactly how a given command is using system resources.
 
+Here is a [very nice example](http://jabrcx.github.io/blog/2014/09/14/from-sys-cpu-to-source-code/) of how to use `perf` to do deep dives into cpu hogging issues.
+
 ### get a view of the memory
 
 See available memory with: 
